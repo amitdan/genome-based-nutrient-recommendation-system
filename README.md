@@ -1,5 +1,5 @@
-# mother-and-baby-care
-mother-and-baby-care
+# NRS - Genome Based Nurient Recommendation system
+NRS - Genome Based Nurient Recommendation system
 
 ## `express`
 
