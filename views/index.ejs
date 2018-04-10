@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  </head>
+    <style>
+
+*, *:before, *:after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background: #105469;
+  font-family: 'Open Sans', sans-serif;
+}
+table {
+ 
+  border-radius: 0.25em;
+  border-collapse: collapse;
+  margin: 1em;
+}
+th {
+  border-bottom: 1px solid #fff;
+  color: #E2B842;
+  font-size: 0.85em;
+  font-weight: 600;
+  padding: 0.5em 1em;
+  text-align: left;
+}
+td {
+  color: #fff;
+  font-weight: 400;
+  padding: 0.95em 1em;
+    border-bottom: 1px solid #fff;
+}
+.disabled td {
+  color: #4F5F64;
+}
+tbody tr {
+  transition: background 0.25s ease;
+}
+tbody tr:hover {
+  background: #014055;
+}
+
+.lead{
+color:  #fff;
+    }
+
+	.white{
+color:  #ffffff;        
+        }
+	
+.red{
+color:  #ff4000;        
+        }
+.green{
+color:  #40ff00;       
+        }
+.yellow{
+color: #ffff00;            
+     }
+.button {
+    background-color: grey;
+    color:  #014055;
+    border: none;
+    padding: 2px 10px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+}
+
+ #myDIV {
+    width: 50%;
+    padding: 20px 0;
+    text-align: center;
+    background-color: grey;
+    margin-top: 20px;
+     margin-left: 300px;
+}
+    </style>
+  <body>
+    <div class="container">
+      <div class="page-header">
+        <p class="lead">M&B Care - Genome based Nutrient Recommendation System</p>
+      </div>
+
+      <% if (authorize_url) { %>
+      <a href="<%= authorize_url %>" class="btn btn-default">Connect with genome to get Genetic Insights</a>
+      <% } %>
+
+      <% if (reports.length > 0) { %>
+      <table class="table">
+          <br>
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Genetic insights</th>
+            <th>Genetic insights score</th>
+             <th>Recommendations</th> 
+    
+          </tr>
+        </thead>
+        <tbody>
+          <% for (let report of reports) { %>
+          <tr>
+                <% if(report.summary.score <2) { %>
+                <th class="red" scope="row"><%= report.phenotype.display_name %></th>
+                <td><%= report.summary.text %></td>
+                <td><%= report.summary.score %></td>
+				<td><button class="button" onclick="myFunction()">Recommend</button></td>
+              
+                               
+               <% } %>
+              
+               <% if(report.summary.score ==2) { %>
+                <th class="yellow" scope="row"><%= report.phenotype.display_name %></th>
+                <td><%= report.summary.text %></td>
+                <td><%= report.summary.score %></td>
+              <td><button class="button" onclick="myFunction()">Recommend</button></td>
+               
+               <% } %>
+              
+               <% if(report.summary.score >2) { %>
+                <th class="green" scope="row"><%= report.phenotype.display_name %></th>
+                <td><%= report.summary.text %></td>
+                <td><%= report.summary.score %></td>
+              <td><button class="button" onclick="myFunction()">Recommend</button></td>
+              
+               <% } %>
+              
+              
+          </tr>
+           
+          <% } %>
+        </tbody>  
+      </table>
+      
+        
+        
+          
+    
+        <div id="myDIV">
+            <table>
+                <thead>
+				
+				                  
+                    <tr>
+                        <th>Recommendations</th>
+                        <th>Type</th>
+						<th>Weather</th>
+                        <th>A</th>
+                        <th>B1</th>
+                        <th>B2</th>
+                        <th>B6</th>
+                        <th>C</th>
+                    </tr>
+					</thead>
+					<tbody>
+                     
+                        <% for (let res of apiResponse) { %>
+						<tr>
+                            <td>
+                                <%= res.item %><br>   
+                            </td>  
+                             <td>
+                                <%= res.type %><br>
+                            </td>
+							<td>
+                                <%= res.weather %><br>   
+                            </td> 
+                          <% if(res.a="true") { %>
+                                <td>
+                                    <%= res.a %><br>
+                                </td>
+                          <% } %> 
+                         <% if(res.b1="true") { %>
+                                <td>
+                                    <%= res.b1 %><br>
+                                </td>
+                          <% } %> 
+						  <td>
+                                    <%= res.b2 %><br>
+                                </td>
+								<td>
+                                    <%= res.b6 %><br>
+                                </td>
+								<td>
+                                    <%= res.c %><br>
+                                </td>
+                         </tr>
+                    <% } %> 
+                    
+                  
+                </tbody>
+            </table>
+           
+        </div>
+		
+		<% } %>
+		
+		<div
+		<p class="white">Nutrient Scoring System ::</p>
+        <p class="red">Red---------Poor Nutrient Level</p>
+        <p class="yellow">Yellow-------Intermediate Nutrient Level</p>
+        <p class="green">Green--------High Nutrient Level</p>   
+        </div>
+	
+
+<script>
+function myFunction() {
+    var x = document.getElementById("myDIV");
+    if (x.style.display === "none") {
+        x.style.display = "block";
+    } else {
+        x.style.display = "none";
+    }
+  
+    
+}
+</script>  
+</body>
+</html>
